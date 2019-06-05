@@ -1,0 +1,2 @@
+ssh: adduser login ; su login
+graphique: On entre le login et le mot de passe dans les champs correspondant.

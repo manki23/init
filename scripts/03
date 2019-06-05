@@ -1,0 +1,130 @@
+#!/bin/bash
+#Tic Tac Toe by manki
+
+tab=('.' '.' '.' '.' '.' '.' '.' '.' '.');
+# 0 = draw
+# 1 = won
+# 2 = lost
+# 3 = keep going
+end_game=3
+game=0
+
+while [ $game -eq 0 ]
+do
+	clear
+	echo
+	echo
+	echo
+	echo -e "\033[36m	##### #  #####	##### ##### #####	##### ##### #####\033[0m"
+	echo -e "\033[36m	  #      #    	  #   #   # #    	  #   #   # # \033[0m"
+	echo -e "\033[36m	  #   #  #    	  #   ##### #    	  #   #   # ### \033[0m"
+	echo -e "\033[36m	  #   #  #    	  #   #   # #    	  #   #   # # \033[0m"
+	echo -e "\033[36m	  #   #  #####	  #   #   # #####	  #   ##### #####\033[0m"
+	echo
+	echo
+	echo
+	echo "				${tab[0]} | ${tab[1]} | ${tab[2]}"
+	echo "				${tab[3]} | ${tab[4]} | ${tab[5]}"
+	echo "				${tab[6]} | ${tab[7]} | ${tab[8]}"
+	echo
+	echo
+	if [ $end_game -eq 0 ]; then
+		echo -e "			\033[33mDraw... (Match Nul)\033[0m"
+		game=1
+	elif [ $end_game -eq 1 ]; then
+		echo -e "				\033[32mYou win !!!\033[0m"
+		game=1
+	elif [ $end_game -eq 2 ]; then
+		echo -e "			\033[31mYou lost (>.<)'\033[0m"
+		game=1
+	fi
+	if [ $game -eq 1 ]; then
+		break
+	fi
+	echo
+	echo
+	echo "Choose your move :"
+	echo "		0 | 1 | 2"
+	echo "		3 | 4 | 5"
+	echo "		6 | 7 | 8"
+	echo
+	echo
+	read -r move
+	while [ "${tab[$move]}" != '.' ]
+	do
+		echo "Choose an empty spot!"
+		echo -n "Enter your move : "
+	read -r move
+	done
+	tab[$move]='x'
+	if [ ${tab[0]} = 'x' ] && [ ${tab[1]} = 'x' ] && [ ${tab[2]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[3]} = 'x' ] && [ ${tab[4]} = 'x' ] && [ ${tab[5]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[6]} = 'x' ] && [ ${tab[7]} = 'x' ] && [ ${tab[8]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[0]} = 'x' ] && [ ${tab[3]} = 'x' ] && [ ${tab[6]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[1]} = 'x' ] && [ ${tab[4]} = 'x' ] && [ ${tab[7]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[2]} = 'x' ] && [ ${tab[5]} = 'x' ] && [ ${tab[8]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[6]} = 'x' ] && [ ${tab[4]} = 'x' ] && [ ${tab[2]} = 'x' ]; then
+		end_game=1
+	elif [ ${tab[0]} = 'x' ] && [ ${tab[4]} = 'x' ] && [ ${tab[8]} = 'x' ]; then
+		end_game=1
+	fi
+	if [ $end_game -eq 1 ]; then
+		continue
+	fi
+	space=0
+	for i in "${!tab[@]}";
+	do
+		if [ ${tab[i]} = '.' ]; then
+			space=1
+		fi;
+	done
+	if [ $space -eq 0 ]; then
+		end_game=0
+		continue
+	fi
+	turn=0
+	while [ $turn -eq 0 ]
+	do
+		play=$[ ( $RANDOM % 9 )  + 0 ]
+		if [ ${tab[$play]} = '.' ]; then
+			tab[$play]='o'
+			turn=1
+		fi
+	done
+	if [ ${tab[0]} = 'o' ] && [ ${tab[1]} = 'o' ] && [ ${tab[2]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[3]} = 'o' ] && [ ${tab[4]} = 'o' ] && [ ${tab[5]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[6]} = 'o' ] && [ ${tab[7]} = 'o' ] && [ ${tab[8]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[0]} = 'o' ] && [ ${tab[3]} = 'o' ] && [ ${tab[6]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[1]} = 'o' ] && [ ${tab[4]} = 'o' ] && [ ${tab[7]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[2]} = 'o' ] && [ ${tab[5]} = 'o' ] && [ ${tab[8]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[6]} = 'o' ] && [ ${tab[4]} = 'o' ] && [ ${tab[2]} = 'o' ]; then
+		end_game=2
+	elif [ ${tab[0]} = 'o' ] && [ ${tab[4]} = 'o' ] && [ ${tab[8]} = 'o' ]; then
+		end_game=2
+	fi
+	if [ $end_game -eq 2 ]; then
+		continue
+	fi
+	space=0
+	for i in "${!tab[@]}";
+	do
+		if [ ${tab[i]} = '.' ]; then
+			space=1
+		fi;
+	done
+	if [ $space -eq 0 ]; then
+		end_game=0
+	fi
+done
